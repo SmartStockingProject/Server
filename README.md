@@ -5,14 +5,13 @@ In this project, we maintain a consistent Git branch naming convention based on 
 
 To simplify the process and avoid manual errors, we provide a script that automatically creates branches from the terminal.
 
----
-
 ## 📦 Branch Naming Convention
 
 The standard format is:
 <type>/<task-id>-<PascalCaseDescription>
 ### Example:
 script/86euh9ypn-CreationOfAutomaticBranchFormat
+
 ## 🚀 How to Create a New Branch
 
 1. Make sure you're in the project root directory.
