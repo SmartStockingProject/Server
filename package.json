@@ -18,6 +18,7 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "dotenv": "^17.2.1",
     "express": "^4.21.2",
     "mongoose": "^8.10.1",
     "pdfkit": "^0.16.0"

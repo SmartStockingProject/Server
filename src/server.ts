@@ -1,8 +1,9 @@
-import express from 'express';
+import app from './app';
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import PDFDocument from 'pdfkit';
 
-const app = express();
+dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 // התחברות למסד הנתונים MongoDB
@@ -21,9 +22,6 @@ const PORT = process.env.PORT || 3000;
 //   doc.end();
 // });
 
-app.get('/', (req: any, res: any) => {
-  res.send("hello to smart stocking");
-});
 
 // הפעלת השרת
 app.listen(PORT, () => {
