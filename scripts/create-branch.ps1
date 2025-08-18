@@ -1,13 +1,13 @@
-# scripts/create-branch.ps1
-
-function Convert-ToPascalCase($input) {
-    $words = $input -split '\s+'
+function Convert-ToPascalCase($text) {
+    Write-Host "`n[Debug] Raw input: '$text'" -ForegroundColor Cyan
+    $words = $text -split '\s+'
     $pascalCase = ""
     foreach ($word in $words) {
         if ($word.Length -gt 0) {
             $pascalCase += $word.Substring(0,1).ToUpper() + $word.Substring(1).ToLower()
         }
     }
+    Write-Host "[Debug] PascalCase result: '$pascalCase'" -ForegroundColor Cyan
     return $pascalCase
 }
 
