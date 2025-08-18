@@ -1,5 +1,6 @@
 import express from 'express';
-import userRouter from './routes/user.ruoter';
+import userRouter from './routes/user.router';
+import { errorHandler } from './middlewares/errorHandler';
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(express.json());
 // Routes
 app.use('/api', userRouter);
 
-// // Error Handling Middleware
-// app.use(errorHandler);
+// Error Handling Middleware
+app.use(errorHandler);
 
 export default app;
