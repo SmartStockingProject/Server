@@ -1,4 +1,35 @@
-# Server
+# smart stocking server
+# Inventory Counting System for a Business
+Development of a user-friendly, convenient, and synchronized interface for multiple users (inventory counters), designed for a system that stores products and records counted inventory.
+The system will generate legally compliant documents for signing, as well as annual reports required to be retained by law
+
+# Run Application
+
+## Cloning the Project
+Use the following command to clone the project from the repository:
+   ```bash
+   git clone https://github.com/SmartStockingProject/Server.git
+   ```
+## Installing Dependencies
+Navigate to the project directory:
+```bash
+cd Server
+```
+Install the required libraries by running the following command:
+```bash
+npm install
+```
+## Create .env File
+```bash
+NODE_ENV=development
+```
+
+## Running the Project
+Now, you can start the project by using:
+```bash
+npm start
+```
+
 # 🛠️ Automatic Git Branch Creation Based on ClickUp Tasks
 
 In this project, we maintain a consistent Git branch naming convention based on tasks from ClickUp.
