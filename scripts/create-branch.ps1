@@ -28,3 +28,4 @@ git checkout -b $branchName
 # פלט למשתמש
 Write-Host "`n✅ Branch created:" -ForegroundColor Green
 Write-Host "$branchName" -ForegroundColor Yellow
+
