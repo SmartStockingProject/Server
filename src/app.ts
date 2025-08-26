@@ -1,7 +1,7 @@
-import express from 'express';
-import userRouter from './routes/user.router';
-import stockItemRouter from './routes/stockItem.router';
-import { errorHandler } from './middlewares/errorHandler';
+import express from "express";
+import userRouter from "./routes/user.router";
+import stockItemRouter from "./routes/stockItem.router";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
 
@@ -13,8 +13,8 @@ const app = express();
 app.use(express.json());
 
 // Routes
-app.use('/api', userRouter);
-app.use('/api', stockItemRouter);
+app.use("/api", userRouter);
+app.use("/api", stockItemRouter);
 
 // Error Handling Middleware
 app.use(errorHandler);
