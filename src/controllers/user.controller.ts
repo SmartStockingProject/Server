@@ -8,10 +8,14 @@ import {
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 import { User } from '../types/user.interface';
 
-export const createUser = async (req: Request, res: Response): Promise<any> => {
+export const createUser = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  try {
   const dto: CreateUserDto = req.body; // סוג האובייקט שמתקבל בבקשה הוא CreateUserDto
   const user = await createUserService(dto); // הסוג המוחזר יהיה User
   return res.status(201).json(user);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
@@ -28,8 +32,6 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
 
 export const getUser = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   try {
-    console.log("hi!");
-    
     const userId = req.params.id;
     const user = await getUserService(userId);
     return res.status(200).json(user); 
