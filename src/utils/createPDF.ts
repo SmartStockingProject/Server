@@ -14,7 +14,7 @@ export const createPdf = (res: Response) => {
   res.setHeader("Content-Disposition", 'attachment; filename="output.pdf"');
 
   doc.pipe(res);
-  const table = [
+  let table = [
     ["שם", "כמות"],
     ["עט", "30"],
     ["עיפרון", "100"],
@@ -33,10 +33,41 @@ export const createPdf = (res: Response) => {
     ["עיפרון", "100"],
     ["עיפרון", "100"],
     ["3עיפרון", "100"],
-    ["עיפרון", "100"],
-    ["עיפרון", "100"],
-    ["עיפרון", "100"],
     ["4עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["5עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["1עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["1עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["1עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
+    ["עיפרון", "100"],
   ];
   generatePdfWithTable(doc, table, 0);
 };
@@ -60,19 +91,31 @@ export const drawTable = (
   console.log(`indexTable: ${indexTable} | INDEX_TABLE : ${INDEX_TABLE}`);
   
   const footerHeight = 50;
-  const startX = doc.page.width - 150;;
+  let startX = doc.page.width - 150;
   let startY = doc.y; // נקודת הY אחרי הכותרת עם מרווח
+  const savedY = startY;
   const rowHeight = 30;
   const columnWidth = 100;
   const maxHeight = doc.page.height - footerHeight - 100; // height page -150
+  let countTablesInPage = 0;// ספירת טבלאות בעמוד הנוכחי
 
 for (let rowIndex = indexTable; rowIndex < table.length; rowIndex++) {
-  const row = table[rowIndex];
+  let row = table[rowIndex];
     
     if (/*y +*/ startY+ rowHeight > maxHeight || rowIndex > (table.length-2)) {        
       INDEX_TABLE= rowIndex;
       console.log(`PAGE BREAK at rowIndex: ${rowIndex} | INDEX_TABLE: ${INDEX_TABLE}`);
-      break;
+      countTablesInPage++;
+      if(countTablesInPage < 2){
+        startY = savedY;
+        startX = doc.page.width - 370;
+        console.log(`Continuing on same page at x: ${startX} | y: ${startY}`);
+        table.splice(rowIndex, 0, ["שם", "כמות"]); 
+        row = table[rowIndex];       
+      }
+      else{
+        break;
+      }
     } else {
       console.log(`Drawing row at x y: ${startX} | ${startY} | rowIndex: ${rowIndex} | INDEX_TABLE: ${INDEX_TABLE}`);
     }
