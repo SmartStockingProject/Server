@@ -5,7 +5,7 @@ export const PAGE_MARGIN = 50;
 export let INDEX_TABLE = 0;
 
 // פונקציה ליצירת PDF והגדרת כותרות
-export const createPdf = (res: Response) => {
+export const createPdf = (dataOfTable: string [][], res: Response) => {
   const doc = new PDFDocument({
     size: 'A4',
    });

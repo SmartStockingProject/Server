@@ -28,3 +28,9 @@ export interface StockItemUpdateWholesalePriceDto {
   wholesalePrice: number;     
 }
 
+export interface StockItemByCounterAndDateDto { 
+  name: string;                         
+  quantityInStock: number;     
+}
+
+

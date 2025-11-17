@@ -1,6 +1,7 @@
 // פונקציה ששולפת את כל המידע של הספירה לפי תאריך ולפי סופר
 import { Request, Response, NextFunction } from 'express';
 import { createPdf, generatePdfWithTable } from '../utils/createPDF';
+import { getStockItemsWithPipeline } from '../services/stockItem.service';
 
 
 // export const getInventoryReport = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
@@ -24,6 +25,13 @@ import { createPdf, generatePdfWithTable } from '../utils/createPDF';
 //   }
 // };
 
-export const downloadPdf = (req: Request, res: Response): void => {
-   createPdf(res); 
+export const downloadPdf = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+   console.log("hi from controller "+ req.params.nameCounter + " " + req.params.date);
+   
+   const dataOfTable = await getStockItemsWithPipeline(req.query.nameCounter as string , new Date(req.query.date as string));
+   console.log("hello4");
+   
+  // createPdf(dataOfTable, res); 
+    res.status(200).json(dataOfTable);
 };
+

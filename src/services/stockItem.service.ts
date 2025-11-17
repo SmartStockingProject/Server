@@ -3,9 +3,11 @@ import {
   StockItemDto,
   StockItemUpdateQuantityDto,
   StockItemUpdateWholesalePriceDto,
+  StockItemByCounterAndDateDto,
 } from "../dtos/stockItem.dto";
 import { IStockItem } from "../models/stockIten.model";
 import { getModel } from "../utils/model.select";
+import { sortItemsByCounterAndDatePipeline } from "./inventoryRepoet.service";
 
 export const createStockItem = async (
   dto: StockItemCreateDto
@@ -98,6 +100,28 @@ export const deleteStockItem = async (
     ) as import("mongoose").Model<IStockItem>;
     const doc = await stockItemModel.findByIdAndDelete(id);
     return doc as StockItemDto;
+  } catch (error) {
+    throw error;
+  }
+};
+// קבלת פריטי מלאי מסוננים לפי שם ותאריך באמצעות Pipeline
+export const getStockItemsWithPipeline = async (nameCounter: string, date: Date): Promise<StockItemByCounterAndDateDto[] | null> => {
+  try {
+    const stockItemModel = getModel(
+      "stockItem"
+    ) as import("mongoose").Model<IStockItem>;
+
+    console.log("hello1 "+ nameCounter + " " + date);
+    
+    const pipeline = sortItemsByCounterAndDatePipeline(nameCounter, date.toString());
+    console.log("hello2" + pipeline);
+
+    const doc = await stockItemModel.aggregate(pipeline);
+    console.log("hello3 "+doc.length);
+    
+    if (!doc) return null;
+
+    return doc;
   } catch (error) {
     throw error;
   }

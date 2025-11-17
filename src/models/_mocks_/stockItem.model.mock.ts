@@ -1,5 +1,6 @@
 import { Types } from 'mongoose';
 import { IStockItem } from '../stockIten.model';
+import { sortItemsByCounterAndDatePipeline } from '../../services/inventoryRepoet.service';
 
 let mockStockItems: IStockItem[] = [
     {
@@ -50,6 +51,42 @@ const MockStockItemModel = {
         Object.assign(item, update);
         return options.new ? item : null; // אם רוצים את הפריט המעודכן
     },
+      aggregate: async (pipeline: any) => {
+        // const aggregatedItems = mockStockItems.filter(item => {
+        //     const match = pipeline[0].$match;
+        //     const dateCondition = item.lastUpdatedAt == match.lastUpdatedAt.$eq;
+        //     return item.lastUpdatedBy === match.lastUpdatedBy && dateCondition;
+        // });
+        //------------
+        // const pipeline2 = sortItemsByCounterAndDatePipeline('Admin', new Date().toISOString());
+        // const result = executePipeline(mockStockItems, pipeline);
+        // return result
+          return mockStockItems.map(item => ({
+        name: item.name,
+        quantityInStock: item.quantityInStock, // הוסף גם את הכמות
+    }));
+    },
+};
+
+const executePipeline = (data: any[], pipeline: any) => {
+    let result = data;
+
+    for (const stage of pipeline) {
+        if (stage.$match) {
+            result = result.filter(item => 
+                item.lastUpdatedBy === stage.$match.lastUpdatedBy &&
+                item.lastUpdatedAt.getTime() === stage.$match.lastUpdatedAt.getTime()
+            );
+        }
+        if (stage.$project) {
+            result = result.map(item => ({
+                name: item.name,
+                quantityInStock: item.quantityInStock,
+            }));
+        }
+    }
+
+    return result;
 };
 
 export default MockStockItemModel;
